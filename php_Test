@@ -1,0 +1,84 @@
+<?php
+
+
+/****************************PAGE CREATION**********************************/
+
+function create_page( $mysqli, $data )
+{
+    echo "hello";
+}
+
+
+
+/***************************DATABASE ACCESS**********************************/
+    
+function get_id_from_med_file_imagetable($mysqli, $user_id, $img_src) 
+{
+        if (isset($user_id)) {
+            
+            $key = "med_file";
+            $item = "id";
+            $db = "{$user_id}_imagetable";
+            $type = "s";
+
+            return get_from_db_key($mysqli, $key, $img_src, $type, $db, $item);
+        }
+} 
+
+/********************    GET from this File   ******************************/
+
+if (isset($_GET['f']))
+{
+    $f = $_GET['f'];
+    $d = isset($_GET['d']) ? $_GET['d'] : "";
+    runFunction( $f, $d );
+}
+
+/********************    Post to this File   ******************************/
+
+if (isset($_POST['f']))
+{
+    $f = $_POST['f'];
+    $d = isset($_POST['d']) ? $_POST['d'] : "";
+    runFunction( $f, $d );
+}
+
+
+function runFunction( $f, $d )
+{
+    if ( $f != "")
+    {   
+        // this is in admin space?? Yes
+        include "psl-config.php";
+        include "db_connect.php";
+        include "phplib.php";
+
+        sec_session_start();        
+
+        //are you authorized ???
+        if (login_check($mysqli) == true) {
+           $fn = funcRef($f);
+           if ( $d != "" )
+           {   
+               $js_rtn =  $fn( $mysqli, $d );
+               echo $js_rtn;
+           }
+           else 
+           {
+               $js_rtn =  $fn( $mysqli );
+               echo $js_rtn;
+           }   
+        }
+        else {
+            echo "You are not authorized to access this page.";
+        }
+
+    }
+    else
+    {
+        echo "error";
+    }
+}
+
+
+?>
