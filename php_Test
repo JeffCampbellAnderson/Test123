@@ -5,7 +5,7 @@
 
 function create_page( $mysqli, $data )
 {
-    echo "hello";
+    echo "Hello World!";
 }
 
 
