@@ -1,3 +1,2 @@
-# Test123
-testingGitHub
-Updating the read me file.
+# My Php Library
+Nothing special, some php functions and such
